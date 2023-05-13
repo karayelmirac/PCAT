@@ -1,6 +1,11 @@
 const express = require('express');
 const path = require('path');
+const ejs = require('ejs');
 const app = express();
+
+// TEMPLATE ENGINE
+/* views klasörüne bakar */
+app.set('view engine', 'ejs');
 
 // express.static bir middleware fonksiyonudur.
 //middleware => ara yazılımdır.
@@ -18,10 +23,19 @@ const myLogger = (req, res, next) => {
 
   next();
 };
+
+// express'de statik dosyaları kullanmak için kullanılan built-in function.
 app.use(express.static('public'));
 
+// ROUTES
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'temp/index.html'));
+  res.render('index');
+});
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+app.get('/add', (req, res) => {
+  res.render('add');
 });
 
 const port = 3000;
